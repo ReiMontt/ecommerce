@@ -1,14 +1,16 @@
-import { Search, ChevronDown, Sparkles } from "lucide-react";
+import { Search } from "lucide-react";
+
+interface NavBarProps {
+  categories: string[];
+  activeCategory: string;
+  onCategoryChange: (category: string) => void;
+}
 
 export default function NavBar({
-  search,
-  onSearchChange,
   categories,
   activeCategory,
   onCategoryChange,
-}: any) {
-  const apiCats = categories.filter((c: string) => c !== "All");
-
+}: NavBarProps) {
   // Inside NavBar.tsx
 
   return (

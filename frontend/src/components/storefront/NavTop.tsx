@@ -4,7 +4,9 @@ import { useCartStore } from "../../store/useCartStore";
 
 export default function NavTop({ onMenuToggle }: { onMenuToggle: () => void }) {
   const navigate = useNavigate();
-  const totalItems = useCartStore((s) => s.totalItems());
+  const totalItems = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
 
   return (
     <div className="flex items-center justify-between h-14 px-4 md:px-8 border-b border-slate-50">
