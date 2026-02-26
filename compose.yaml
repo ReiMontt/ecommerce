@@ -1,0 +1,110 @@
+﻿services:
+  # --- THE FRONT DOOR (Gateway) ---
+  gateway:
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "5050:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - productservice
+      - orderservice
+
+  # --- PRODUCT SERVICE ---
+  productservice:
+    build:
+      context: .
+      dockerfile: ProductServices/Dockerfile
+    ports:
+      - "5038:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Jwt__Key=your_super_secret_long_key_at_least_32_chars
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=productdb;Username=postgres;Password=password
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # --- ORDER SERVICE ---
+  orderservice:
+    build:
+      context: .
+      dockerfile: OrderService/Dockerfile
+    ports:
+      - "5040:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Jwt__Key=your_super_secret_long_key_at_least_32_chars
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=orderdb;Username=postgres;Password=password
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  # --- PAYMENT SERVICE ---
+  paymentservice:
+    build:
+      context: .
+      dockerfile: PaymentService/Dockerfile
+    ports:
+      - "5042:8080" # Direct access for testing
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=paymentdb;Username=postgres;Password=password
+    depends_on:
+      - db
+      - seq
+  identityservice:
+    build:
+      context: .
+      dockerfile: IdentityService/Dockerfile
+    ports:
+      - "5044:8080" # Direct access for testing
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=identitydb;Username=postgres;Password=password
+      # We define the JWT key here so we can share it easily later
+      - Jwt__Key=your_super_secret_long_key_at_least_32_chars
+    depends_on:
+      - db
+      - seq
+
+  # --- DATABASE (Shared Server, Independent DBs) ---
+  db:
+    image: postgres:latest
+    container_name: ecom_postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      
+  # redis cache
+  redis:
+    image: redis:alpine
+    container_name: ecom_redis
+    ports:
+      - "6379:6379"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          
+  seq:
+    image: datalust/seq:latest
+    container_name: ecom_logs
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=true
+    ports:
+      - "8081:80"
+
+volumes:
+  postgres_data:

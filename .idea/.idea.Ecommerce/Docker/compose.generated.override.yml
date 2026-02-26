@@ -1,0 +1,92 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  gateway:
+    build:
+      context: "/Users/m1macbookpro/RiderProjects/Ecommerce"
+      dockerfile: "ApiGateway/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/ApiGateway.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "apigateway:dev"
+    ports: []
+    volumes:
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce/ApiGateway:/app:rw"
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce:/src:rw"
+    - "/Users/m1macbookpro/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  identityservice:
+    build:
+      context: "/Users/m1macbookpro/RiderProjects/Ecommerce"
+      dockerfile: "IdentityService/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/IdentityService.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "identityservice:dev"
+    ports: []
+    volumes:
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce/IdentityService:/app:rw"
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce:/src:rw"
+    - "/Users/m1macbookpro/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  orderservice:
+    build:
+      context: "/Users/m1macbookpro/RiderProjects/Ecommerce"
+      dockerfile: "OrderService/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/OrderService.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "orderservice:dev"
+    ports: []
+    volumes:
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce/OrderService:/app:rw"
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce:/src:rw"
+    - "/Users/m1macbookpro/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  paymentservice:
+    build:
+      context: "/Users/m1macbookpro/RiderProjects/Ecommerce"
+      dockerfile: "PaymentService/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/PaymentService.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "paymentservice:dev"
+    ports: []
+    volumes:
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce/PaymentService:/app:rw"
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce:/src:rw"
+    - "/Users/m1macbookpro/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  productservice:
+    build:
+      context: "/Users/m1macbookpro/RiderProjects/Ecommerce"
+      dockerfile: "ProductServices/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/ProductServices.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "productservices:dev"
+    ports: []
+    volumes:
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce/ProductServices:/app:rw"
+    - "/Users/m1macbookpro/RiderProjects/Ecommerce:/src:rw"
+    - "/Users/m1macbookpro/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
