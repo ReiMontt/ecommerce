@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100;400;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-slate-900 antialiased;
+  }
+}
+
+@layer utilities {
+  .font-compressed {
+    font-stretch: 75%;
+    letter-spacing: -0.04em;
+    font-variation-settings: "wdth" 75;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
