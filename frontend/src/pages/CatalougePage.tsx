@@ -5,13 +5,24 @@ import {
   SlidersHorizontal,
   SearchX,
   ChevronRight,
-  LayoutGrid,
   ShoppingCart,
   Check,
 } from "lucide-react";
 import { Loader2 } from "lucide-react";
 
-function ProductCard({ product, isAdded, onAdd }: any) {
+interface ProductCardProps {
+  product: {
+    id: number;
+    name: string;
+    price: number;
+    category: string;
+    imageUrl?: string;
+  };
+  isAdded?: boolean;
+  onAdd?: () => void;
+}
+
+function ProductCard({ product, isAdded, onAdd }: ProductCardProps) {
   return (
     <div className="group cursor-pointer flex flex-col w-full">
       {/* 
@@ -32,7 +43,7 @@ function ProductCard({ product, isAdded, onAdd }: any) {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onAdd();
+              onAdd?.();
             }}
             className={`w-full py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl ${
               isAdded ? "bg-[#b8f53e] text-black" : "bg-black text-white"
@@ -62,7 +73,7 @@ function ProductCard({ product, isAdded, onAdd }: any) {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            onAdd();
+            onAdd?.();
           }}
           className="md:hidden mt-3 w-full py-2 border border-slate-200 rounded-lg text-[10px] font-black uppercase tracking-tighter active:bg-slate-50 transition-colors"
         >

@@ -18,7 +18,9 @@ const navItems = [
 ];
 
 export default function Sidebar() {
-  const totalItems = useCartStore((s) => s.totalItems());
+  const totalItems = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
   const navigate = useNavigate();
 
   return (

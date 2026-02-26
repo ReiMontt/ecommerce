@@ -15,7 +15,7 @@ import CataloguePage from "./pages/CatalougePage";
 const queryClient = new QueryClient();
 
 export default function App() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [, setToken] = useState(localStorage.getItem("token"));
 
   const handleLogout = () => {
     localStorage.clear(); // Clean everything

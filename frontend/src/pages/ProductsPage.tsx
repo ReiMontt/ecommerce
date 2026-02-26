@@ -17,6 +17,20 @@ interface Product {
   category: string;
 }
 
+interface ProductCardProps {
+  product: Product;
+  isAdded: boolean;
+  onAdd: () => void;
+}
+
+interface HeroPanel {
+  name: string;
+  tag: string;
+  bg: string;
+  imageUrl: string;
+  headline: string | null;
+}
+
 const HERO_PANELS = [
   {
     name: "Brown",
@@ -36,7 +50,7 @@ const HERO_PANELS = [
   },
 ];
 
-function HeroPanel({ panel, index }: { panel: any; index: number }) {
+function HeroPanel({ panel }: { panel: HeroPanel; index: number }) {
   return (
     /* ── LAYER 1: THE SHADOW WRAPPER ── */
     /* We put the shadow and margins here. No overflow-hidden on this level! */
@@ -89,8 +103,8 @@ function HeroPanel({ panel, index }: { panel: any; index: number }) {
 }
 
 export default function ProductsPage() {
-  const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [search] = useState("");
+  const [activeCategory] = useState("All");
   const [addedIds, setAddedIds] = useState<Set<number>>(new Set());
   const addItem = useCartStore((s) => s.addItem);
 
@@ -232,7 +246,7 @@ export default function ProductsPage() {
   );
 }
 
-function ProductCard({ product, isAdded, onAdd }: any) {
+function ProductCard({ product, isAdded, onAdd }: ProductCardProps) {
   return (
     <div className="group cursor-pointer flex flex-col w-full">
       {/* 

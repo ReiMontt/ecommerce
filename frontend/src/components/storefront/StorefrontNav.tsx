@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   LogOut,
   ShoppingBag,
@@ -12,13 +11,7 @@ import {
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useCartStore } from "../../store/useCartStore";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,

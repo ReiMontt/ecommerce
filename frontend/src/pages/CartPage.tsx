@@ -2,19 +2,11 @@ import { useCartStore } from "../store/useCartStore";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../lib/api";
 import { useNavigate } from "react-router-dom";
-import {
-  Trash2,
-  CreditCard,
-  ArrowRight,
-  Loader2,
-  Minus,
-  Plus,
-} from "lucide-react";
+import { Trash2, CreditCard, Loader2, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, totalPrice, clearCart } =
-    useCartStore();
+  const { items, removeItem, updateQuantity, totalPrice } = useCartStore();
   const navigate = useNavigate();
 
   const checkoutMutation = useMutation({
@@ -39,10 +31,20 @@ export default function CartPage() {
       toast.success("Redirecting to Secure Checkout...");
       window.location.href = url;
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error(error);
-      const message = error.response?.data?.errors
-        ? Object.values(error.response.data.errors).flat().join(", ")
+      const message = (
+        error as { response?: { data?: { errors?: Record<string, string[]> } } }
+      )?.response?.data?.errors
+        ? Object.values(
+            (
+              error as {
+                response: { data: { errors: Record<string, string[]> } };
+              }
+            ).response.data.errors,
+          )
+            .flat()
+            .join(", ")
         : "Checkout failed. Please check if Services are running.";
       toast.error("Checkout Error", { description: message });
     },

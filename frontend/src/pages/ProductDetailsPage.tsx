@@ -1,16 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { api, productActions, orderActions, paymentActions } from "../lib/api";
+import { useQuery } from "@tanstack/react-query";
 import { useCartStore } from "../store/useCartStore";
-import {
-  ShoppingBag,
-  ArrowLeft,
-  ShieldCheck,
-  Truck,
-  RefreshCcw,
-  Loader2,
-} from "lucide-react";
+import { ArrowLeft, ShieldCheck, Truck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { productActions } from "@/lib/api";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
@@ -92,6 +85,7 @@ export default function ProductDetailsPage() {
               <div className="flex flex-col gap-3">
                 <button
                   onClick={() => {
+                    if (!product) return;
                     addItem(product);
                     toast.success("Added to Bag");
                   }}
@@ -111,7 +105,7 @@ export default function ProductDetailsPage() {
   );
 }
 
-function FeatureItem({ icon, text }: { icon: any; text: string }) {
+function FeatureItem({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
     <div className="flex items-center gap-3 text-slate-400">
       <div className="text-slate-900">{icon}</div>

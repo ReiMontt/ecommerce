@@ -11,7 +11,7 @@ interface CartItem {
 
 interface CartState {
   items: CartItem[];
-  addItem: (product: any) => void;
+  addItem: (product: Omit<CartItem, "quantity">) => void;
   removeItem: (id: number) => void;
   updateQuantity: (id: number, qty: number) => void; // Added this
   clearCart: () => void;

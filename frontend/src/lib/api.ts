@@ -51,16 +51,16 @@ export interface Order {
 // --- ACTIONS ---
 export const authActions = {
   // .NET Identity API returns { accessToken, refreshToken, expiresIn, ... }
-  login: (credentials: any) =>
+  login: (credentials: unknown) =>
     api.post("/auth/login", credentials).then((res) => res.data),
-  register: (data: any) => api.post("/auth/register", data),
+  register: (data: unknown) => api.post("/auth/register", data),
 };
 
 export const productActions = {
   getAll: () => api.get<Product[]>("/product").then((res) => res.data),
   getOne: (id: number) =>
     api.get<Product>(`/product/${id}`).then((res) => res.data),
-  create: (data: any) => api.post("/product", data).then((res) => res.data),
+  create: (data: unknown) => api.post("/product", data).then((res) => res.data),
 };
 
 export const orderActions = {

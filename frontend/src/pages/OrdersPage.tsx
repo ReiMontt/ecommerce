@@ -6,6 +6,7 @@ import {
   Package,
   CheckCircle2,
   AlertCircle,
+  type LucideIcon,
 } from "lucide-react";
 
 interface Order {
@@ -17,24 +18,26 @@ interface Order {
   createdAt: string;
 }
 
-const STATUS_MAP: Record<string, { label: string; class: string; icon: any }> =
-  {
-    Pending: {
-      label: "Pending",
-      class: "bg-amber-50 text-amber-600",
-      icon: Clock,
-    },
-    Paid: {
-      label: "Success",
-      class: "bg-emerald-50 text-emerald-600",
-      icon: CheckCircle2,
-    },
-    Failed: {
-      label: "Declined",
-      class: "bg-red-50 text-red-600",
-      icon: AlertCircle,
-    },
-  };
+const STATUS_MAP: Record<
+  string,
+  { label: string; class: string; icon: LucideIcon }
+> = {
+  Pending: {
+    label: "Pending",
+    class: "bg-amber-50 text-amber-600",
+    icon: Clock,
+  },
+  Paid: {
+    label: "Success",
+    class: "bg-emerald-50 text-emerald-600",
+    icon: CheckCircle2,
+  },
+  Failed: {
+    label: "Declined",
+    class: "bg-red-50 text-red-600",
+    icon: AlertCircle,
+  },
+};
 
 export default function OrdersPage() {
   const {
@@ -117,6 +120,7 @@ export default function OrdersPage() {
                   class: "bg-slate-100",
                   icon: Clock,
                 };
+                const Icon = s.icon;
                 return (
                   <div
                     key={order.id}
@@ -146,7 +150,7 @@ export default function OrdersPage() {
                     <div
                       className={`flex items-center gap-2 px-4 py-2 rounded-full w-fit ${s.class}`}
                     >
-                      <s.icon size={14} strokeWidth={3} />
+                      <Icon size={14} strokeWidth={3} />
                       <span className="text-[10px] font-black uppercase tracking-widest">
                         {s.label}
                       </span>

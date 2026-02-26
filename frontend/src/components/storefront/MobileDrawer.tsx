@@ -29,7 +29,9 @@ export default function MobileDrawer({
   onCategoryChange,
 }: MobileDrawerProps) {
   const navigate = useNavigate();
-  const totalItems = useCartStore((s) => s.totalItems());
+  const totalItems = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
 
   // Lock body scroll when open
   useEffect(() => {
